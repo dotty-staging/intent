@@ -20,7 +20,7 @@ class DelayedFutureTestState with
     executionContext.execute(() => p.success(Thread.currentThread().getId))
     Await.result(p.future, 2 seconds)
 
-  def run(f:(given ExecutionContext) => Expectation): Expectation = f
+  def run(f:(ExecutionContext) ?=> Expectation): Expectation = f
 
 object DelayedFutureTestState with
   val instance = DelayedFutureTestState()

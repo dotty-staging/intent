@@ -9,7 +9,7 @@ private def evalToContain[T](actual: IterableOnce[T],
                               expected: T,
                               expect: Expect[_],
                               listTypeName: String)
-   (given
+   (using
       eqq: Eq[T],
       fmt: Formatter[T],
       cutoff: ListCutoff
@@ -56,7 +56,7 @@ private def evalToContain[T](actual: IterableOnce[T],
   Future.successful(r)
 
 class IterableContainExpectation[T](expect: Expect[IterableOnce[T]], expected: T)(
-  given
+  using
     eqq: Eq[T],
     fmt: Formatter[T],
     cutoff: ListCutoff
@@ -67,7 +67,7 @@ class IterableContainExpectation[T](expect: Expect[IterableOnce[T]], expected: T
     evalToContain(actual, expected, expect, listTypeName(actual))
 
 class ArrayContainExpectation[T](expect: Expect[Array[T]], expected: T)(
-  given
+  using
     eqq: Eq[T],
     fmt: Formatter[T],
     cutoff: ListCutoff
