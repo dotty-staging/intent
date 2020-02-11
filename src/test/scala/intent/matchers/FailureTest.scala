@@ -70,7 +70,7 @@ class FailureTest extends TestSuite with Stateless with Meta:
 
   "Future timeout":
     "should abort a long-running test when whenComplete is used" in:
-      given customTimeout: TestTimeout = TestTimeout(50.millis)
+      given customTimeout as TestTimeout = TestTimeout(50.millis)
       val p = Promise[Int]()
       runExpectation({
         whenComplete(p.future):
@@ -78,7 +78,7 @@ class FailureTest extends TestSuite with Stateless with Meta:
       }, "Test timed out")
 
     "should abort a long-running test when toCompleteWith is used" in:
-      given customTimeout: TestTimeout = TestTimeout(50.millis)
+      given customTimeout as TestTimeout = TestTimeout(50.millis)
       val p = Promise[Int]()
       runExpectation({
         expect(p.future).toCompleteWith(42)

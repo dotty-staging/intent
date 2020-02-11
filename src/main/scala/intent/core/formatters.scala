@@ -45,12 +45,12 @@ class TryFmt[TInner, T <: Try[TInner]](using innerFmt: Formatter[TInner], throwa
 trait FormatterGivens with
   given Formatter[Int] = IntFmt
   given Formatter[Long] = LongFmt
-  given [T <: Throwable]: Formatter[T] = ThrowableFmt[T]
+  given [T <: Throwable] as Formatter[T] = ThrowableFmt[T]
   given Formatter[Boolean] = BooleanFmt
   given Formatter[String] = StringFmt
   given Formatter[Char] = CharFmt
   given Formatter[Double] = DoubleFmt
   given Formatter[Float] = FloatFmt
 
-  given optFmt[TInner, T <: Option[TInner]](using Formatter[TInner]): Formatter[T] = OptionFmt[TInner, T]
-  given tryFmt[TInner, T <: Try[TInner]](using Formatter[TInner]): Formatter[T] = TryFmt[TInner, T]
+  given optFmt[TInner, T <: Option[TInner]](using Formatter[TInner]) as Formatter[T] = OptionFmt[TInner, T]
+  given tryFmt[TInner, T <: Try[TInner]](using Formatter[TInner]) as Formatter[T] = TryFmt[TInner, T]
