@@ -22,7 +22,7 @@ Let's have a look at how tests should be written.
 ```scala
 import intent.{Stateless, TestSuite}
 
-class ToEqualTest extends TestSuite with Stateless with
+class ToEqualTest extends TestSuite with Stateless:
   "toEqual" :
     "for Boolean" :
       "true should equal true" in expect(true).toEqual(true)

@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 import scala.util.{Success, Try}
 
-class DelayedFutureTestState with
+class DelayedFutureTestState:
   val executorService = Executors.newFixedThreadPool(1)
   given executionContext as ExecutionContext = ExecutionContext.fromExecutorService(executorService)
 
@@ -22,10 +22,10 @@ class DelayedFutureTestState with
 
   def run(f:(ExecutionContext) ?=> Expectation): Expectation = f
 
-object DelayedFutureTestState with
+object DelayedFutureTestState:
   val instance = DelayedFutureTestState()
 
-class DelayedFutureTest extends TestSuite with State[DelayedFutureTestState] with
+class DelayedFutureTest extends TestSuite with State[DelayedFutureTestState]:
 
   "A DelayedFuture" using (DelayedFutureTestState.instance) to:
 

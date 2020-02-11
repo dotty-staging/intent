@@ -35,7 +35,7 @@ case class Position(filePath: String, lineNumber0: Int, columnNumber0: Int)
  * Companion object for <code>Position</code> that defines an implicit
  * method that uses a macro to grab the enclosing position.
  */
-object Position with
+object Position:
 
   /**
    * Implicit method, implemented with a macro, that returns the enclosing
