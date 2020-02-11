@@ -6,7 +6,7 @@ import scala.util.matching.Regex
 
 class MatchExpectation[T](expect: Expect[String], re: Regex)(
   using fmt: Formatter[String]
-) extends Expectation with
+) extends Expectation:
   def evaluate(): Future[ExpectationResult] =
     val actual = expect.evaluate()
 

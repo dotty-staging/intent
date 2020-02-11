@@ -60,7 +60,7 @@ class IterableContainExpectation[T](expect: Expect[IterableOnce[T]], expected: T
     eqq: Eq[T],
     fmt: Formatter[T],
     cutoff: ListCutoff
-) extends Expectation with
+) extends Expectation:
 
   def evaluate(): Future[ExpectationResult] =
     val actual = expect.evaluate()
@@ -71,7 +71,7 @@ class ArrayContainExpectation[T](expect: Expect[Array[T]], expected: T)(
     eqq: Eq[T],
     fmt: Formatter[T],
     cutoff: ListCutoff
-) extends Expectation with
+) extends Expectation:
 
   def evaluate(): Future[ExpectationResult] =
     val actual = expect.evaluate()

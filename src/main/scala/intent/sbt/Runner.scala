@@ -38,7 +38,7 @@ class SbtRunner(
   val args: Array[String],
   val remoteArgs: Array[String],
   classLoader: ClassLoader
-) extends Runner with
+) extends Runner:
 
   def done(): String =
     // This is called when test is done, and after that the test task myst not be called
@@ -111,7 +111,7 @@ trait LoggedEvent(color: String, prefix: String, suiteName: String, testNames: S
   def log(loggers: Array[Logger], executionTime: Long): Unit = loggers.foreach(_.info(color + s"[${prefix}] ${fullyQualifiedTestName} (${executionTime} ms)"))
 
 case class SuccessfulEvent(duration: Long, suiteName: String, testNames: Seq[String], fingerprint: Fingerprint, focusMode: Boolean)
-extends Event with LoggedEvent(Console.GREEN, "PASSED", suiteName, testNames) with
+extends Event with LoggedEvent(Console.GREEN, "PASSED", suiteName, testNames):
 
   override def fullyQualifiedName = suiteName
   override def status = sbt.testing.Status.Success
@@ -119,7 +119,7 @@ extends Event with LoggedEvent(Console.GREEN, "PASSED", suiteName, testNames) wi
   override def throwable(): sbt.testing.OptionalThrowable = sbt.testing.OptionalThrowable()
 
 case class FailedEvent(duration: Long, suiteName: String, testNames: Seq[String], fingerprint: Fingerprint, focusMode: Boolean, assertionMessage: String, err: Option[Throwable])
-extends Event with LoggedEvent(Console.RED, "FAILED", suiteName, testNames) with
+extends Event with LoggedEvent(Console.RED, "FAILED", suiteName, testNames):
   val color = Console.RED // Why are not these inherited form LoggedEvent?
   val prefix = "FAILED"
 
@@ -133,7 +133,7 @@ extends Event with LoggedEvent(Console.RED, "FAILED", suiteName, testNames) with
     loggers.foreach(_.info(color + s"[${prefix}] ${fullyQualifiedTestName} (${executionTime} ms) \n\t${color}${assertionMessage}${error}"))
 
 case class ErrorEvent(duration: Long, suiteName: String, testNames: Seq[String], fingerprint: Fingerprint, focusMode: Boolean, errContext: String, err: Option[Throwable])
-extends Event with LoggedEvent(Console.RED, "ERROR", suiteName, testNames) with
+extends Event with LoggedEvent(Console.RED, "ERROR", suiteName, testNames):
   val color = Console.RED // Why are not these inherited form LoggedEvent?
   val prefix = "ERROR"
 
@@ -146,7 +146,7 @@ extends Event with LoggedEvent(Console.RED, "ERROR", suiteName, testNames) with
     loggers.foreach(_.info(color + s"[${prefix}] ${fullyQualifiedTestName} (${executionTime} ms) \n\t${color}${errContext}${error}"))
 
 case class IgnoredEvent(suiteName: String, testNames: Seq[String], fingerprint: Fingerprint, focusMode: Boolean)
-extends Event with LoggedEvent(Console.YELLOW, "IGNORED", suiteName, testNames) with
+extends Event with LoggedEvent(Console.YELLOW, "IGNORED", suiteName, testNames):
 
   override def duration = 0L
   override def fullyQualifiedName = suiteName

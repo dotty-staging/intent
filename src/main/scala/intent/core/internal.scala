@@ -91,7 +91,7 @@ trait IntentStateBase[TState] extends IntentStructure with TestLanguage:
 
   private[intent] sealed case class ContextInit(name: String, init: () => Future[TState], position: Position,
     hasFocus: Boolean = false, isIgnored: Boolean = false)
-  extends Context with
+  extends Context:
 
     def transform(f: Future[Option[TState]]) = init().map(Some.apply)
     def withFocus() = copy(hasFocus = true)
@@ -99,7 +99,7 @@ trait IntentStateBase[TState] extends IntentStructure with TestLanguage:
 
   private[intent] sealed case class ContextMap(name: String, tx: Map, position: Position,
     hasFocus: Boolean = false, isIgnored: Boolean = false)
-  extends Context with
+  extends Context:
 
     def transform(f: Future[Option[TState]]) = f.map(_.map(tx))
     def withFocus() = copy(hasFocus = true)
@@ -107,7 +107,7 @@ trait IntentStateBase[TState] extends IntentStructure with TestLanguage:
 
   private[intent] sealed case class ContextFlatMap(name: String, tx: FlatMap, position: Position,
     hasFocus: Boolean = false, isIgnored: Boolean = false)
-  extends Context with
+  extends Context:
 
     def transform(f: Future[Option[TState]]) =
       f.flatMap:
@@ -262,7 +262,7 @@ trait IntentStateSyntax[TState] extends IntentStateBase[TState]:
 
   private case class TableDriveContext(name: String, generator: () => Iterable[TState], position: Position,
     hasFocus: Boolean = false, isIgnored: Boolean = false)
-  extends Context with
+  extends Context:
 
     def transform(f: Future[Option[TState]]): Future[Option[TState]] =
       Future.failed(new ShouldNotHappenException("TableDriveContext should not be used directly"))
