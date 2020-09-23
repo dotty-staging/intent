@@ -45,16 +45,17 @@ trait ExpectGivens:
 
   given defaultListCutoff as ListCutoff = ListCutoff()
 
-  def [T](expect: Expect[T]) not: Expect[T] = expect.negate()
-
-  def [T](expect: Expect[T]) toEqual (expected: T)(using eqq: Eq[T], fmt: Formatter[T]): Expectation =
-    new EqualExpectation(expect, expected)
+  extension [T](expect: Expect[T])
+    def not: Expect[T] = expect.negate()
+    def toEqual (expected: T)(using eqq: Eq[T], fmt: Formatter[T]): Expectation =
+      new EqualExpectation(expect, expected)
+  end extension
 
   // toMatch is partial
-  def [T](expect: Expect[String]) toMatch (re: Regex)(using fmt: Formatter[String]): Expectation =
+  extension [T](expect: Expect[String]) def toMatch (re: Regex)(using fmt: Formatter[String]): Expectation =
     new MatchExpectation(expect, re)
 
-  def [T](expect: Expect[Future[T]]) toCompleteWith (expected: T)
+  extension [T](expect: Expect[Future[T]]) def toCompleteWith (expected: T)
      (using
         eqq: Eq[T],
         fmt: Formatter[T],
@@ -65,7 +66,7 @@ trait ExpectGivens:
     new ToCompleteWithExpectation(expect, expected)
 
   // We use ClassTag here to avoid "double definition error" wrt Expect[IterableOnce[T]]
-  def [T : ClassTag](expect: Expect[Array[T]]) toContain (expected: T)
+  extension [T : ClassTag](expect: Expect[Array[T]]) def toContain (expected: T)
      (using
         eqq: Eq[T],
         fmt: Formatter[T],
@@ -73,7 +74,7 @@ trait ExpectGivens:
       ): Expectation =
     new ArrayContainExpectation(expect, expected)
 
-  def [T](expect: Expect[IterableOnce[T]]) toContain (expected: T)
+  extension [T](expect: Expect[IterableOnce[T]]) def toContain (expected: T)
      (using
         eqq: Eq[T],
         fmt: Formatter[T],
@@ -82,7 +83,7 @@ trait ExpectGivens:
     new IterableContainExpectation(expect, expected)
 
   // Note: Not using IterableOnce here as it matches Option and we don't want that.
-  def [T](expect: Expect[Iterable[T]]) toEqual (expected: Iterable[T])
+  extension [T](expect: Expect[Iterable[T]]) def toEqual (expected: Iterable[T])
      (using
         eqq: Eq[T],
         fmt: Formatter[T]
@@ -90,7 +91,7 @@ trait ExpectGivens:
     new IterableEqualExpectation(expect, expected)
 
   // We use ClassTag here to avoid "double definition error" wrt Expect[Iterable[T]]
-  def [T : ClassTag](expect: Expect[Array[T]]) toEqual (expected: Iterable[T])
+  extension [T : ClassTag](expect: Expect[Array[T]]) def toEqual (expected: Iterable[T])
      (using
         eqq: Eq[T],
         fmt: Formatter[T]
@@ -100,20 +101,22 @@ trait ExpectGivens:
   /**
    * (1, 2, 3) toHaveLength 3
    */
-  def [T](expect: Expect[IterableOnce[T]]) toHaveLength (expected: Int)(using ec: ExecutionContext): Expectation =
+  extension [T](expect: Expect[IterableOnce[T]]) def toHaveLength (expected: Int)(using ec: ExecutionContext): Expectation =
     new LengthExpectation(expect, expected)
 
   // toThrow with only exception type
-  def [TEx : ClassTag](expect: Expect[_]) toThrow ()(using fmt: Formatter[String]): Expectation =
-    new ThrowExpectation[TEx](expect, AnyExpectedMessage)
+  extension [TEx : ClassTag](expect: Expect[_])
+    def toThrow ()(using fmt: Formatter[String]): Expectation =
+      new ThrowExpectation[TEx](expect, AnyExpectedMessage)
 
-  // toThrow with exception type + message (string, so full match)
-  def [TEx : ClassTag](expect: Expect[_]) toThrow (expectedMessage: String)(using fmt: Formatter[String]): Expectation =
-    new ThrowExpectation[TEx](expect, ExactExpectedMessage(expectedMessage))
+    // toThrow with exception type + message (string, so full match)
+    def toThrow (expectedMessage: String)(using fmt: Formatter[String]): Expectation =
+      new ThrowExpectation[TEx](expect, ExactExpectedMessage(expectedMessage))
 
     // toThrow with exception type + regexp (partial match, like toMatch)
-  def [TEx : ClassTag](expect: Expect[_]) toThrow (re: Regex)(using fmt: Formatter[String]): Expectation =
-    new ThrowExpectation[TEx](expect, RegexExpectedMessage(re))
+    def toThrow (re: Regex)(using fmt: Formatter[String]): Expectation =
+      new ThrowExpectation[TEx](expect, RegexExpectedMessage(re))
+  end extension
 
   // TODO:
   // - toContain i lista (massa varianter, IterableOnce-ish)
