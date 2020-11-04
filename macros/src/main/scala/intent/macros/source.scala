@@ -49,10 +49,9 @@ object Position:
    * Helper method for Position macro.
    */
   private def genPosition(implicit qctx: QuoteContext): Expr[Position] =
-    import qctx.reflect.rootPosition
-
-    val file = rootPosition.sourceFile
+    val pos = qctx.reflect.Position.ofMacroExpansion
+    val file = pos.sourceFile
     val filePath: String = file.toString
-    val lineNo: Int = rootPosition.startLine
-    val colNo: Int = rootPosition.startColumn
+    val lineNo: Int = pos.startLine
+    val colNo: Int = pos.startColumn
     '{ Position(${Expr(filePath)}, ${Expr(lineNo)}, ${Expr(colNo)}) }
