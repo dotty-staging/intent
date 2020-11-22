@@ -48,7 +48,7 @@ object Position:
   /**
    * Helper method for Position macro.
    */
-  private def genPosition(implicit qctx: QuoteContext): Expr[Position] =
+  private def genPosition(using Quotes): Expr[Position] =
     val pos = qctx.reflect.Position.ofMacroExpansion
     val file = pos.sourceFile
     val filePath: String = file.toString
