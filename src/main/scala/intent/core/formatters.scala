@@ -52,5 +52,5 @@ trait FormatterGivens:
   given Formatter[Double] = DoubleFmt
   given Formatter[Float] = FloatFmt
 
-  given optFmt[TInner, T <: Option[TInner]](using Formatter[TInner]) as Formatter[T] = OptionFmt[TInner, T]
-  given tryFmt[TInner, T <: Try[TInner]](using Formatter[TInner]) as Formatter[T] = TryFmt[TInner, T]
+  given [TInner, T <: Option[TInner]] => (Formatter[TInner]) => Formatter[T] as optFmt = OptionFmt[TInner, T]
+  given [TInner, T <: Try[TInner]] => (Formatter[TInner]) => Formatter[T] as tryFmt = TryFmt[TInner, T]

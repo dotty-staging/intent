@@ -60,9 +60,9 @@ trait TestLanguage:
     new { def evaluate() = Future.successful(TestPassed()) }
 
   // TODO: Can this be overridden? Or do we need a protected def
-  given executionContext as ExecutionContext = ExecutionContext.global
+  given ExecutionContext as executionContext = ExecutionContext.global
 
-  given defaultTestTimeout as TestTimeout = TestTimeout(5.seconds)
+  given TestTimeout as defaultTestTimeout = TestTimeout(5.seconds)
 
 /**
   * Base structure for Intent test cases, whether they are async, sync, stateful or stateless.
