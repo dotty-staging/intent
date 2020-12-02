@@ -43,7 +43,7 @@ class Expect[T](blk: => T, position: Position, negated: Boolean = false):
 
 trait ExpectGivens:
 
-  given defaultListCutoff as ListCutoff = ListCutoff()
+  given defaultListCutoff: ListCutoff = ListCutoff()
 
   extension [T](expect: Expect[T])
     def not: Expect[T] = expect.negate()

@@ -12,7 +12,7 @@ import scala.util.{Success, Try}
 
 class DelayedFutureTestState:
   val executorService = Executors.newFixedThreadPool(1)
-  given executionContext as ExecutionContext = ExecutionContext.fromExecutorService(executorService)
+  given executionContext: ExecutionContext = ExecutionContext.fromExecutorService(executorService)
 
   val executorThreadId =
     // Determine the thread ID of the execution context, so we can compare with that in the tests.

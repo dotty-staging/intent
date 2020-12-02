@@ -78,8 +78,8 @@ trait EqGivens:
   given Eq[Boolean] = BooleanEq
   given Eq[String] = StringEq
   given Eq[Char] = CharEq
-  given (using FloatingPointPrecision[Double]) as Eq[Double] = DoubleEq()
-  given (using FloatingPointPrecision[Float]) as Eq[Float] = FloatEq()
-  given throwableEq[T <: Throwable] as Eq[T] = ThrowableEq[T]
-  given optEq[TInner, T <: Option[TInner]](using Eq[TInner]) as Eq[T] = OptionEq[TInner, T]
-  given tryEq[TInner, T <: Try[TInner]](using Eq[TInner]) as Eq[T] = TryEq[TInner, T]
+  given (using FloatingPointPrecision[Double]): Eq[Double] = DoubleEq()
+  given (using FloatingPointPrecision[Float]): Eq[Float] = FloatEq()
+  given throwableEq[T <: Throwable]: Eq[T] = ThrowableEq[T]
+  given optEq[TInner, T <: Option[TInner]](using Eq[TInner]): Eq[T] = OptionEq[TInner, T]
+  given tryEq[TInner, T <: Try[TInner]](using Eq[TInner]): Eq[T] = TryEq[TInner, T]

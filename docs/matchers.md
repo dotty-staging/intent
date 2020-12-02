@@ -152,7 +152,7 @@ expect(div(5, 0)).toThrow[IllegalArgumentException]("requirement failed: Divisio
 expect(div(5, 0)).toThrow[IllegalArgumentException]("failed.*zero".r)
 ```
 
-Note that since the argument to `expect` is a block, testing of a more complex piece of 
+Note that since the argument to `expect` is a block, testing of a more complex piece of
 potentially-throwing code can be written as follows:
 
 ```scala
@@ -203,7 +203,7 @@ It is possible to define custom equality for a type. Consider the following exam
 from Intent's own test suite:
 
 ```scala
-given customIntEq as intent.core.Eq[Int] :
+given customIntEq: intent.core.Eq[Int] with
   def areEqual(a: Int, b: Int) = Math.abs(a - b) == 1
 expect(Some(42)).toEqual(Some(43))
 ```
@@ -219,7 +219,7 @@ to a certain precision, defined as the number of decimals that must match.
 Here's an example where a custom precision is used:
 
 ```scala
-given customPrecision as intent.core.FloatingPointPrecision[Float] :
+given customPrecision: intent.core.FloatingPointPrecision[Float] with
   def numberOfDecimals: Int = 2
 expect(1.234f).toEqual(1.235f)
 ```
@@ -235,7 +235,7 @@ It is possible to customize how a value is printed in a test failure message.
 Here's an example from Intent's test suite that shows how:
 
 ```scala
-given customIntFmt as core.Formatter[Int] :
+given customIntFmt: core.Formatter[Int] with
   def format(a: Int): String = a.toString.replace("4", "forty-")
 runExpectation(expect(42).toEqual(43),
   "Expected forty-3 but found forty-2")
@@ -247,7 +247,7 @@ The default timeout for `whenComplete` and `toCompleteWith` is 5 seconds.
 It is possible to use a custom timeout:
 
 ```scala
-given customTimeout as TestTimeout = TestTimeout(500.millis)
+given customTimeout: TestTimeout = TestTimeout(500.millis)
 expect(someFuture).toCompleteWith("fast")
 ```
 
