@@ -52,7 +52,7 @@ trait ExpectGivens:
   end extension
 
   // toMatch is partial
-  extension [T](expect: Expect[String]) def toMatch (re: Regex)(using fmt: Formatter[String]): Expectation =
+  extension (expect: Expect[String]) def toMatch[T](re: Regex)(using fmt: Formatter[String]): Expectation =
     new MatchExpectation(expect, re)
 
   extension [T](expect: Expect[Future[T]]) def toCompleteWith (expected: T)
@@ -105,16 +105,16 @@ trait ExpectGivens:
     new LengthExpectation(expect, expected)
 
   // toThrow with only exception type
-  extension [TEx : ClassTag](expect: Expect[_])
-    def toThrow ()(using fmt: Formatter[String]): Expectation =
+  extension (expect: Expect[_])
+    def toThrow[TEx : ClassTag]()(using fmt: Formatter[String]): Expectation =
       new ThrowExpectation[TEx](expect, AnyExpectedMessage)
 
     // toThrow with exception type + message (string, so full match)
-    def toThrow (expectedMessage: String)(using fmt: Formatter[String]): Expectation =
+    def toThrow[TEx : ClassTag](expectedMessage: String)(using fmt: Formatter[String]): Expectation =
       new ThrowExpectation[TEx](expect, ExactExpectedMessage(expectedMessage))
 
     // toThrow with exception type + regexp (partial match, like toMatch)
-    def toThrow (re: Regex)(using fmt: Formatter[String]): Expectation =
+    def toThrow[TEx : ClassTag](re: Regex)(using fmt: Formatter[String]): Expectation =
       new ThrowExpectation[TEx](expect, RegexExpectedMessage(re))
   end extension
 
