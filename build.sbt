@@ -24,8 +24,8 @@ lazy val root = project
     libraryDependencies += "org.scala-sbt" % "test-interface" % "1.0",
     testFrameworks += new TestFramework("intent.sbt.Framework"),
 
-    // Without -Yindent-colons, the editor and compiler get out of sync for me - Per
-    scalacOptions += "-Yindent-colons",
+    // Without -language:experimental.fewerBraces, the editor and compiler get out of sync for me - Per
+    scalacOptions += "-language:experimental.fewerBraces",
 
     // include the macro classes and resources in the main jar
     mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,

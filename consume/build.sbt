@@ -9,7 +9,7 @@ lazy val root = project
   .settings(
     name := "consume-intent",
     organization := "com.factor10",
-    scalacOptions += "-Yindent-colons",
+    scalacOptions += "-language:experimental.fewerBraces",
     libraryDependencies += "com.factor10" %% "intent" % "0.3.0",
     testFrameworks += new TestFramework("intent.sbt.Framework")
   )
