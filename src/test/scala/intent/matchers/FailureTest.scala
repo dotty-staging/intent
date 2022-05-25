@@ -8,7 +8,7 @@ import scala.concurrent.{Future, Promise}
 import scala.concurrent.duration._
 
 class FailureTest extends TestSuite with Stateless with Meta:
-  "a toEqual failure":
+  "a toEqual failure" {
     "is described properly" in:
       runExpectation(expect(1).toEqual(2), "Expected 2 but found 1")
 
@@ -39,15 +39,15 @@ class FailureTest extends TestSuite with Stateless with Meta:
         def format(a: Int): String = a.toString.replace("4", "forty-")
       runExpectation(expect(42).toEqual(43),
         "Expected forty-3 but found forty-2")
-
-  "a toMatch failure":
+  }
+  "a toMatch failure" {
     "is described properly" in:
       runExpectation(expect("foobar").toMatch("^bar".r), "Expected \"foobar\" to match /^bar/")
 
     "is described properly in the negative" in:
       runExpectation(expect("foobar").not.toMatch("^foo".r), "Expected \"foobar\" not to match /^foo/")
-
-  "a toContain failure":
+  }
+  "a toContain failure" {
     "is described properly" in:
       runExpectation(expect(Seq(1, 2)).toContain(3), "Expected List(1, 2) to contain 3")
 
@@ -64,11 +64,11 @@ class FailureTest extends TestSuite with Stateless with Meta:
     "is described properly when item is not found in infinite stream but it's expected" in:
       val s = LazyList.from(1)
       runExpectation(expect(s).toContain(-1), "Expected LazyList(1, 2, 3, 4, 5, ...) to contain -1")
-
-  "using fail()":
+  }
+  "using fail()" {
     "should fail with the given description" in runExpectation(fail("Manually failed"), "Manually failed")
-
-  "Future timeout":
+  }
+  "Future timeout" {
     "should abort a long-running test when whenComplete is used" in:
       given customTimeout: TestTimeout = TestTimeout(50.millis)
       val p = Promise[Int]()
@@ -83,3 +83,4 @@ class FailureTest extends TestSuite with Stateless with Meta:
       runExpectation({
         expect(p.future).toCompleteWith(42)
       }, "Test timed out")
+    }

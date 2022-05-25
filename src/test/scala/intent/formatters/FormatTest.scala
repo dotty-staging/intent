@@ -4,7 +4,7 @@ import intent._
 import scala.util.{Success, Failure, Try}
 
 class FormatTest extends TestSuite with Stateless:
-  "Formatting":
+  "Formatting" {
     "supports Long" in expect(format(42L)).toEqual("42")
     "surrounds Char in single quotes" in expect(format('a')).toEqual("'a'")
     "surrounds String in double quotes" in expect(format("a")).toEqual("\"a\"")
@@ -19,6 +19,7 @@ class FormatTest extends TestSuite with Stateless:
     "supports Throwable" in:
       val t = RuntimeException("oops")
       expect(format(t)).toEqual("java.lang.RuntimeException: oops")
+  }
 
   def format[T](x: T)(using fmt: core.Formatter[T]): String =
     fmt.format(x)

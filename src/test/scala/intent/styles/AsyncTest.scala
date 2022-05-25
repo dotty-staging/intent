@@ -6,7 +6,7 @@ import scala.concurrent.{Future, ExecutionContext}
 
 class AsyncTest extends TestSuite with Stateless with Meta:
 
-  "an async test":
+  "an async test" {
     "can use whenComplete" in:
       val f = Future { 21 * 2 }
       whenComplete(f):
@@ -18,6 +18,7 @@ class AsyncTest extends TestSuite with Stateless with Meta:
         whenComplete(f):
           result => expect(result).toEqual(42)
       }, "The Future passed to 'whenComplete' failed")
+  }
 
 class AsyncStateTest extends TestSuite with AsyncState[MyAsyncState] with Meta:
 

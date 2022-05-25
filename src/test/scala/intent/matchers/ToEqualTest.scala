@@ -5,9 +5,9 @@ import scala.util.{Success, Failure, Try}
 import intent.helpers.Meta
 
 class ToEqualTest extends TestSuite with Stateless with Meta:
-  "toEqual":
+  "toEqual" {
 
-    "for Boolean":
+    "for Boolean" {
       "true should equal true" in expect(true).toEqual(true)
 
       "true should *not* equal false" in expect(true).not.toEqual(false)
@@ -15,8 +15,9 @@ class ToEqualTest extends TestSuite with Stateless with Meta:
       "false should equal false" in expect(false).toEqual(false)
 
       "false should *note* equal true" in expect(false).not.toEqual(true)
+    }
 
-    "for String":
+    "for String" {
       "<empty> should equal <empty>" in expect("").toEqual("")
 
       "<foo> should equal <foo>" in expect("foo").toEqual("foo")
@@ -28,36 +29,40 @@ class ToEqualTest extends TestSuite with Stateless with Meta:
       "handles <null> as expected" in expect("").not.toEqual(null.asInstanceOf[String])
 
       "handles <null> as actual" in expect(null.asInstanceOf[String]).not.toEqual("")
+    }
 
-    "for Char":
+    "for Char" {
       "should support equality test" in expect('a').toEqual('a')
       "should support inequality test" in expect('a').not.toEqual('A')
+    }
 
-    "for Double":
+    "for Double" {
       "should support equality test" in expect(3.14d).toEqual(3.14d)
       "should support inequality test" in expect(3.14d).not.toEqual(2.72d)
 
-      "with precision":
+      "with precision" {
         "should test equal with 12 decimals" in expect(1.123456789123d).toEqual(1.123456789123d)
         "should allow diff in the 13th decimal" in expect(1.1234567891234d).toEqual(1.1234567891235d)
         "should allow customization of precision" in:
           given customPrecision: intent.core.FloatingPointPrecision[Double] with
             def numberOfDecimals: Int = 2
           expect(1.234d).toEqual(1.235d)
-
-    "for Float":
+      }
+    }
+    "for Float" {
       "should support equality test" in expect(3.14f).toEqual(3.14f)
       "should support inequality test" in expect(3.14f).not.toEqual(2.72f)
 
-      "with precision":
+      "with precision" {
         "should test equal with 6 decimals" in expect(1.123456f).toEqual(1.123456f)
         "should allow diff in the 7th decimal" in expect(1.1234567f).toEqual(1.1234568f)
         "should allow customization of precision" in:
           given customPrecision: intent.core.FloatingPointPrecision[Float] with
             def numberOfDecimals: Int = 2
           expect(1.234f).toEqual(1.235f)
-
-    "for Option":
+      }
+    }
+    "for Option" {
       "Some should equal Some" in expect(Some(42)).toEqual(Some(42))
       "Some should test inner equality" in expect(Some(42)).not.toEqual(Some(43))
       "Some should not equal None" in expect(Some(42)).not.toEqual(None)
@@ -66,8 +71,8 @@ class ToEqualTest extends TestSuite with Stateless with Meta:
         given customIntEq: intent.core.Eq[Int] with
           def areEqual(a: Int, b: Int) = Math.abs(a - b) == 1
         expect(Some(42)).toEqual(Some(43))
-
-    "for Try":
+    }
+    "for Try" {
       "Success should equal Success" in expect[Try[Int]](Success(42)).toEqual(Success(42))
       "Success should test inner equality" in expect[Try[Int]](Success(42)).not.toEqual(Success(43))
       "Success should not equal Failure" in expect[Try[Int]](Success(42)).not.toEqual(Failure(new Exception("oops")))
@@ -78,12 +83,12 @@ class ToEqualTest extends TestSuite with Stateless with Meta:
         val ex1 = RuntimeException("oops1")
         val ex2 = RuntimeException("oops2")
         expect[Try[Int]](Failure(ex1)).not.toEqual(Failure(ex2))
-
-    "for Long":
+    }
+    "for Long" {
       "should support equality test" in expect(10L).toEqual(10L)
       "should support inequality test" in expect(10L).not.toEqual(11L)
-
-    "for collection":
+    }
+    "for collection" {
       "supports equality test" in expect(Seq(1, 2)).toEqual(Seq(1, 2))
       "detects inquality in shorter length" in expect(Seq(1, 2)).not.toEqual(Seq(1))
       "detects inquality in longer length" in expect(Seq(1, 2)).not.toEqual(Seq(1, 2, 3))
@@ -107,8 +112,10 @@ class ToEqualTest extends TestSuite with Stateless with Meta:
       "is described properly when both are null" in:
         runExpectation(expect(null.asInstanceOf[Seq[Int]]).not.toEqual(null.asInstanceOf[Seq[Int]]),
           "Expected <null> to not equal <null>")
-
-    "for array":
+    }
+    "for array" {
       "supports equality test" in expect(Array(1, 2)).toEqual(Array(1, 2))
       "detects inquality in item" in expect(Array(1, 2)).not.toEqual(Array(1, 3))
       "supports equality test with non-array" in expect(Array(1, 2)).toEqual(Seq(1, 2))
+    }
+  }

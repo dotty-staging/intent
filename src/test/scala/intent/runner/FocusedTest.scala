@@ -58,32 +58,33 @@ case class FocusedTestCase(
 
 class NestedFocusedStatelessTestSuite extends Stateless:
   "some suite" focused:
-    "nested suite":
+    "nested suite" {
       "should be run" in success()
       "should also be run" in success()
-
-  "another suite":
+    }
+  "another suite" {
     "should *not* be run" in fail("should not happen")
-
-  "a third suite":
+  }
+  "a third suite" {
     "should include single focus" focus success()
-
+  }
   "should also *not* be run" in fail("should not happen")
   "should be run" focus success()
 
 class MidBranchFocusedStatelessTestSuite extends Stateless:
-  "some suite":
-    "another suite":
+  "some suite" {
+    "another suite" {
       "should *not* be run A" in fail("should not happen")
       "should also *not* be run B" in fail("should not happen")
-
+    }
     "nested suite" focused:
       "should be run C" in success()
       "should also be run D" in success()
 
-    "a third suite":
+    "a third suite" {
       "should include single focus" focus success()
-
+    }
+  }
 class NestedFocusedStatefulTestSuite extends State[Unit]:
   "focused suite" using (()) focused:
     "nested suite" using (()) to:
@@ -170,7 +171,7 @@ class FocusedAsyncStatefulTestSuite extends AsyncState[Unit]:
        _ => success()
 
 class IgnoredStatelessTestSuite extends Stateless:
-  "top":
+  "top" {
     "child" ignored:
       "should not be run" in fail("should not happen")
       "should also not be run" in fail("should not happen")
@@ -179,6 +180,7 @@ class IgnoredStatelessTestSuite extends Stateless:
         "should not be run" in fail("should not happen")
         "should also not be run" in fail("should not happen")
     "should be run" in success()
+  }
 
 class IgnoredTableDrivenTestSuite extends State[Unit]:
   "top level" using (()) to:

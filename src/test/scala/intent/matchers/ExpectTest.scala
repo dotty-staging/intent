@@ -5,7 +5,7 @@ import intent._
 import scala.concurrent.Future
 
 class ExpectTest extends TestSuite with Stateless:
-  "an expectation":
+  "an expectation" {
     "can be negated" in expect(1 + 2).not.toEqual(4)
 
     "can check a Future" in:
@@ -21,3 +21,4 @@ class ExpectTest extends TestSuite with Stateless:
       expect(l).not.toContain(4)
 
     "can pass using successful" in success()
+  }
