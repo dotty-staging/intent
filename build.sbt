@@ -25,7 +25,7 @@ lazy val root = project
     testFrameworks += new TestFramework("intent.sbt.Framework"),
 
     // Without -language:experimental.fewerBraces, the editor and compiler get out of sync for me - Per
-    scalacOptions += "-language:experimental.fewerBraces",
+    scalacOptions ++= List("-source", "3.3"),
 
     // include the macro classes and resources in the main jar
     mappings in (Compile, packageBin) ++= mappings.in(macros, Compile, packageBin).value,
