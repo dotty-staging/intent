@@ -8,17 +8,17 @@ class TestDiscoveryTest extends TestSuite with State[TestDiscoveryTestState]:
     "empty test suite" using (_.withSuite(EmtpyTestSuite())) to:
 
       "should have 0 tests" in:
-        st => expect(st.suite.allTestCases).toHaveLength(0)
+        st => expect(st.suite.nn.allTestCases).toHaveLength(0)
 
     "single level test suite" using (_.withSuite(SingleLevelTestSuite())) to:
 
       "should have 1 tests" in:
-        st => expect(st.suite.allTestCases).toHaveLength(1)
+        st => expect(st.suite.nn.allTestCases).toHaveLength(1)
 
     "nested test suite" using (_.withSuite(NestedTestsSuite())) to:
 
       "should have 3 tests" in:
-        st => expect(st.suite.allTestCases).toHaveLength(3)
+        st => expect(st.suite.nn.allTestCases).toHaveLength(3)
 
-case class TestDiscoveryTestState(suite: Stateless = null):
+case class TestDiscoveryTestState(suite: Stateless|Null = null):
   def withSuite(s: Stateless) = copy(suite = s)

@@ -94,7 +94,6 @@ class TestSuiteRunner(classLoader: ClassLoader):
         case failure: TestFailed => acc.incFailure()
         case error: TestError => acc.incError()
         case ignored: TestIgnored => acc.incIgnore()
-        case null => throw new IllegalStateException("Unsupported test result: null")
     }))
 
   private def instantiateSuite(className: String): Try[IntentStructure] =
