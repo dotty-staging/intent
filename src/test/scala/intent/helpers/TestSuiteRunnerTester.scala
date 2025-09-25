@@ -9,7 +9,7 @@ import intent.runner.{TestSuiteRunner, TestSuiteError, TestSuiteResult}
 */
 trait TestSuiteRunnerTester(using ec: ExecutionContext) extends Subscriber[TestCaseResult]:
 
-  def suiteClassName: String
+  def suiteClassName: String | Null
 
   private object lock
   val runner = new TestSuiteRunner(cl)
@@ -17,13 +17,13 @@ trait TestSuiteRunnerTester(using ec: ExecutionContext) extends Subscriber[TestC
 
   def runAll(): Future[Either[TestSuiteError, TestSuiteResult]] =
     assert(suiteClassName != null, "Suite class name must be set")
-    runner.runSuite(suiteClassName)
+    runner.runSuite(suiteClassName.nn)
 
   def runWithEventSubscriber(): Future[Either[TestSuiteError, TestSuiteResult]] =
     assert(suiteClassName != null, "Suite class name must be set")
-    runner.runSuite(suiteClassName, Some(this))
+    runner.runSuite(suiteClassName.nn, Some(this))
 
-  def evaluate(): IntentStructure = runner.evaluateSuite(suiteClassName).fold(_ => ???, identity)
+  def evaluate(): IntentStructure = runner.evaluateSuite(suiteClassName.nn).fold(_ => ???, identity)
 
   def receivedEvents(): Seq[TestCaseResult] = events
 

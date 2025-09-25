@@ -5,7 +5,7 @@ import scala.concurrent.Future
 import scala.collection.mutable.ListBuffer
 import scala.Array
 
-private def evalToContain[T](actual: IterableOnce[T],
+private def evalToContain[T](actual: IterableOnce[T] | Null,
                               expected: T,
                               expect: Expect[_],
                               listTypeName: String)
@@ -21,7 +21,7 @@ private def evalToContain[T](actual: IterableOnce[T],
 
   val seen = ListBuffer[String]()
   var found = false
-  val iterator = Option(actual).map(_.iterator).getOrElse(emptyIterator)
+  val iterator = if actual == null then emptyIterator else actual.iterator
   val shouldNotFind = expect.isNegated
   var breakEarly = false
   var itemsChecked = 0
